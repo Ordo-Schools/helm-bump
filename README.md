@@ -16,7 +16,7 @@ Convert your `KUBECONFIG` to base64 (i.e. `cat path/to/kubeconfig.yaml | base64`
 
 ```
       - name: Deploy testing
-        uses: markrebec/helm-bump@v1
+        uses: ordo-schools/helm-bump@v1
         with:
           release: my-release
           package: my-github-org/my-package
