@@ -2,10 +2,10 @@ name: 'Helm Bump'
 description: 'Bumps a single helm release key/value (usually an image tag version) as part of a workflow'
 inputs:
   token:
-    description: 'Github token to be used with private helm repos (`${{ secrets.GITHUB_TOKEN }}`)'
+    description: 'Github token to be used with private helm repos (`\${{ secrets.GITHUB_TOKEN }}`)'
     required: true
   kubeconfig:
-    description: 'Base64 encoded version of the KUBECONFIG file to use for the bump (`cat path/to/kubeconfig.yaml | base64 -w 0`). Should probably be added as a GitHub Secret so you can use `${{ secrets.MY_KUBECONFIG }}`.'
+    description: 'Base64 encoded version of the KUBECONFIG file to use for the bump (`cat path/to/kubeconfig.yaml | base64 -w 0`). Should probably be added as a GitHub Secret so you can use `\${{ secrets.MY_KUBECONFIG }}`.'
     required: true
   release:
     description: 'Name of the release to operate on (i.e. `helm upgrade RELEASE PACKAGE`)'
