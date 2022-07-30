@@ -1,0 +1,26 @@
+#!/bin/ash
+
+REPOSITORY=$1
+PACKAGE=$2
+RELEASE=$3
+SETKEY=$4
+SETVAL=$5
+B64KCONFIG=$6
+USERNAME=$7
+PASSWORD=$8
+OPTIONS=$9
+
+mkdir -p ~/.kube
+echo "$B64KCONFIG" | base64 -d > ~/.kube/config
+chmod 600 ~/.kube/config
+export KUBECONFIG=
+
+helm repo add bumpcharts \
+  --username "$USERNAME" \
+  --password "$PASSWORD" \
+  "$REPOSITORY"
+
+helm repo update
+
+echo "Upgrading release '$RELEASE' with '$REPOSITORY' and setting $SETKEY=$SETVAL..."
+helm upgrade --install --set $SETKEY=$SETVAL $RELEASE bumpcharts/$PACKAGE $OPTIONS

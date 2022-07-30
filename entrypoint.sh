@@ -1,27 +1,12 @@
 #!/bin/ash
 
-RELEASE=$1
-IFS='/'
-read -r REPO PACKAGE <<EOF
-$2
-EOF
-unset IFS
-SETKEY=$3
-SETVAL=$4
-GHTOKEN=$5
-B64KCONFIG=$6
+set -e
 
-mkdir -p ~/.kube
-echo "$B64KCONFIG" | base64 -d > ~/.kube/config
-chmod 600 ~/.kube/config
-export KUBECONFIG=
+# Run command with bump if the first argument contains a "-" or is not a system command. The last
+# part inside the "{}" is a workaround for the following bug in ash/dash:
+# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=874264
+if [ "${1#-}" != "${1}" ] || [ -z "$(command -v "${1}")" ] || { [ -f "${1}" ] && ! [ -x "${1}" ]; }; then
+  set -- bump "$@"
+fi
 
-helm repo add $REPO \
-  --username "$GHTOKEN" \
-  --password "$GHTOKEN" \
-  "https://raw.githubusercontent.com/$REPO/$PACKAGE/main/"
-
-helm repo update
-
-echo "Upgrading release '$RELEASE' with '$REPO/$PACKAGE' and setting $SETKEY=$SETVAL..."
-helm upgrade --install --set $SETKEY=$SETVAL $RELEASE $REPO/$PACKAGE
+exec "$@"
