@@ -2,11 +2,15 @@
 
 set -e
 
+echo "RUNNING HELM RUNNER ENTRYPOINT!"
+
 if [ ! -z "$BASE64_KUBECONFIG" ]; then
-  mkdir -p ~/.kube
-  echo "$BASE64_KUBECONFIG" | base64 -d > ~/.kube/config
-  chmod 600 ~/.kube/config
+  echo "KUBECONFIG ENV VAR FOUND!"
+  mkdir -p /.kube
+  echo "$BASE64_KUBECONFIG" | base64 -d > /.kube/config
+  chmod 600 /.kube/config
   export KUBECONFIG=
+  echo "SET KUBECONFIG FILE TO /.kube/config"
 fi
 
 # Run command with helm if the first argument contains a "-" or is not a system command. The last
