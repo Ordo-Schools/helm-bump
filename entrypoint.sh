@@ -9,7 +9,7 @@ if [ ! -z "$BASE64_KUBECONFIG" ]; then
   mkdir -p /.kube
   echo "$BASE64_KUBECONFIG" | base64 -d > /.kube/config
   chmod 600 /.kube/config
-  export KUBECONFIG=
+  export KUBECONFIG=/.kube/config
   echo "SET KUBECONFIG FILE TO /.kube/config"
 fi
 
