@@ -1,46 +1,5 @@
-name: 'Helm Bump'
-description: 'Bumps a single helm release key/value (usually an image tag version) as part of a workflow'
-inputs:
-  repository:
-    description: 'Private github repository, including full path, where your chart is hosted'
-    required: true
-  # token:
-  #   description: 'Github token to be used with private helm repos (`secrets.GITHUB_TOKEN`)'
-  #   required: true
-  username:
-    description: 'The username to use when adding the private repository (usually a `GITHUB_TOKEN` env var or secret)'
-    required: true
-  password:
-    description: 'The password to use when adding the private repository (usually a `GITHUB_TOKEN` env var or secret)'
-    required: true
-  kubeconfig:
-    description: 'Base64 encoded version of the KUBECONFIG file to use for the bump (`cat path/to/kubeconfig.yaml | base64 -w 0`). Should probably be added as a GitHub Secret so you can use `secrets.MY_KUBECONFIG`.'
-    required: true
-  release:
-    description: 'Name of the release to operate on (i.e. `helm upgrade RELEASE PACKAGE`)'
-    required: true
-  package:
-    description: 'The name of the private github package (i.e. `my-org/my-package` translates to `https://raw.githubusercontent.com/my-org/my-package/main/`)'
-    required: true
-  key:
-    description: 'Helm attribute to set with `--set KEY=VALUE`(usually an image tag, something like `image.tag`)'
-    required: true
-  value:
-    description: 'Value to set for the provided key'
-    required: true
-  options:
-    description: 'Additional options to pass to `helm upgrade` (i.e. `--wait --no-hooks`)'
-    required: false
+name: 'Helm Runner'
+description: 'Run helm commands as part of your workflows'
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  args:
-    - ${{ inputs.repository }}
-    - ${{ inputs.release }}
-    - ${{ inputs.package }}
-    - ${{ inputs.key }}
-    - ${{ inputs.value }}
-    - ${{ inputs.kubeconfig }}
-    - ${{ inputs.username }}
-    - ${{ inputs.password }}
-    - ${{ inputs.options }}

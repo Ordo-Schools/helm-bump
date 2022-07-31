@@ -6,7 +6,6 @@ FROM alpine/helm:3.9.1
 #   rm -f kubectl
 
 COPY entrypoint.sh /entrypoint.sh
-COPY bump /bin/bump
 
 ENTRYPOINT [ "/entrypoint.sh" ]
-CMD [ "bump" ]
+CMD [ "helm" ]
