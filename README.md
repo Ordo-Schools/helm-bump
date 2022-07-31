@@ -15,5 +15,5 @@ jobs:
         uses: ordo-schools/helm-runner@main
         run: helm upgrade --install my-release my-repo/my-chart
         env:
-          BASE64_KUBECONFIG=${{ secrets.MY_BASE64_KUBECONFIG }}
+          BASE64_KUBECONFIG: ${{ secrets.MY_BASE64_KUBECONFIG }}
 ```
